@@ -1,0 +1,40 @@
+{
+    "name": "cordova-plugin-save-image",
+    "version": "0.1.0",
+    "cordova": {
+        "id": "cordova-plugin-save-image",
+        "platforms": [
+            "ios",
+            "android"
+        ]
+    },
+    "description": "This plugin allows you to save an image file to the iOS Photo Library or Android Gallery.",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/quiply/SaveImage"
+    },
+    "issue": "https://github.com/quiply/SaveImage/issues",
+    "keywords": [
+        "image",
+        "photo library",
+        "camera roll",
+        "ionic",
+        "cordova",
+        "ecosystem:cordova",
+        "cordova-ios",
+        "cordova-android"
+    ],
+    "engines": [
+        {
+            "name": "cordova",
+            "version": ">=3.0.0"
+        }
+    ],
+    "author": {
+        "name": "Quiply Technologies GmbH",
+        "email": "hello@quiply.com",
+        "url": "http://www.quiply.com"
+    },
+    "license": "MIT",
+    "homepage": "https://github.com/quiply/SaveImage#readme"
+}

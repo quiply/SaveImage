@@ -1,0 +1,49 @@
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-save-image"
+        version="0.1.0">
+
+    <name>SaveImage</name>
+    <description>This plugin allows you to save an image to the iOS Camera roll / Photo Library or Android Gallery.</description>
+    <license>MIT</license>
+    <author>Quiply Technologies GmbH - hello@quiply.com</author>
+    <keywords>image,photo library,camera roll,gallery,image gallery</keywords>
+    <repo>https://github.com/quiply/SaveImage.git</repo>
+    <issue>https://github.com/quiply/SaveImage/issues</issue>
+
+    <engines>
+        <engine name="cordova" version=">=3.0.0"/>
+    </engines>
+
+    <js-module src="www/SaveImage.js" name="SaveImage">
+        <clobbers target="cordova.plugins.imagesaver"/>
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+        </config-file>
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="SaveImage">
+                <param name="android-package" value="com.quiply.cordova.saveimage.SaveImage"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/SaveImage.java" target-dir="src/com/quiply/cordova/saveimage"/>
+    </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="SaveImage">
+                <param name="ios-package" value="SaveImage"/>
+                <param name="onload" value="true"/>
+            </feature>
+        </config-file>
+
+        <header-file src="src/ios/SaveImage.h"/>
+        <source-file src="src/ios/SaveImage.m" compiler-flags="-fno-objc-arc"/>
+    </platform>
+
+</plugin>
