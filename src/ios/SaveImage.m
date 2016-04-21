@@ -6,7 +6,7 @@
 
 - (void)saveImageToGallery:(CDVInvokedUrlCommand*)command {
 	[self.commandDelegate runInBackground:^{
-	    self.callbackId = command.callbackId;^
+	    self.callbackId = command.callbackId;
 
 		NSString *imgAbsolutePath = [command.arguments objectAtIndex:0];
 
