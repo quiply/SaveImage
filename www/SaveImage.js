@@ -10,7 +10,15 @@ ImageSaver.saveImageToGallery = function (localImagePath, successCallback, failu
         throw new Error('SaveImage Error: failureCallback is not a function');
     }
 
-    return cordova.exec(successCallback, failureCallback, 'SaveImage', 'saveImageToGallery', [localImagePath]);
+    return cordova.exec(
+        successCallback, failureCallback, 'SaveImage', 'saveImageToGallery', [_getLocalImagePathWithoutPrefix()]);
+
+    function _getLocalImagePathWithoutPrefix() {
+        if (localImagePath.startsWith('file:///')) {
+            return localImagePath.substring(7);
+        }
+        return localImagePath;
+    }
 };
 
 module.exports = ImageSaver;
