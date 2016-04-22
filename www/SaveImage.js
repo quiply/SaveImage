@@ -14,7 +14,7 @@ ImageSaver.saveImageToGallery = function (localImagePath, successCallback, failu
         successCallback, failureCallback, 'SaveImage', 'saveImageToGallery', [_getLocalImagePathWithoutPrefix()]);
 
     function _getLocalImagePathWithoutPrefix() {
-        if (localImagePath.startsWith('file:///')) {
+        if (localImagePath.indexOf('file:///') === 0) {
             return localImagePath.substring(7);
         }
         return localImagePath;
