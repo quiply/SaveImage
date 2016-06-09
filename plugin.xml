@@ -15,6 +15,8 @@
         <engine name="cordova" version=">=3.0.0"/>
     </engines>
 
+    <dependency id="cordova-plugin-compat" version="^1.0.0" />
+
     <js-module src="www/SaveImage.js" name="SaveImage">
         <clobbers target="cordova.plugins.imagesaver"/>
     </js-module>

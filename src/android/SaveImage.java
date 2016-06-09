@@ -12,11 +12,13 @@ import java.util.Date;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
-
+import org.apache.cordova.PermissionHelper;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
@@ -25,7 +27,12 @@ import android.util.Log;
  * The SaveImage class offers a method saving an image to the devices' media gallery.
  */
 public class SaveImage extends CordovaPlugin {
-    public static final String ACTION = "saveImageToGallery";
+    public static final int WRITE_PERM_REQUEST_CODE = 1;
+    private final String ACTION = "saveImageToGallery";
+    private final String WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+    private CallbackContext callbackContext;
+    private String filePath;
+    
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -38,23 +45,37 @@ public class SaveImage extends CordovaPlugin {
     }
 
     /**
-     * Save image to device gallery
+     * Check saveImage arguments and app permissions
      *
      * @param args              JSON Array of args
      * @param callbackContext   callback id for optional progress reports
      *
      * args[0] filePath         file path string to image file to be saved to gallery
-     */
-    private void saveImageToGallery(JSONArray args, CallbackContext callbackContext) throws JSONException {
-        // file path of image to be saved
-        String filePath = args.getString(0);
+     */  
+    private void saveImageToGallery(JSONArray args, CallbackContext callback) throws JSONException {
+    	this.filePath = args.getString(0);
+    	this.callbackContext = callback;
         Log.d("SaveImage", "SaveImage in filePath: " + filePath);
-
+        
         if (filePath == null || filePath.equals("")) {
-            callbackContext.error("Missing filePath");
+        	callback.error("Missing filePath");
             return;
         }
-
+        
+        if (PermissionHelper.hasPermission(this, WRITE_EXTERNAL_STORAGE)) {
+        	Log.d("SaveImage", "Permissions already granted, or Android version is lower than 6");
+        	performImageSave();
+        } else {
+        	Log.d("SaveImage", "Requesting permissions for WRITE_EXTERNAL_STORAGE");
+        	PermissionHelper.requestPermission(this, WRITE_PERM_REQUEST_CODE, WRITE_EXTERNAL_STORAGE);
+        }      
+    }
+    
+    
+    /**
+     * Save image to device gallery
+     */
+    private void performImageSave() throws JSONException {
         // create file from passed path
         File srcFile = new File(filePath);
 
@@ -148,4 +169,25 @@ public class SaveImage extends CordovaPlugin {
         mediaScanIntent.setData(contentUri);
         cordova.getActivity().sendBroadcast(mediaScanIntent);
     }
+    
+
+    /**
+     * Callback from PermissionHelper.requestPermission method
+     */
+	public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) throws JSONException {
+		for (int r : grantResults) {
+			if (r == PackageManager.PERMISSION_DENIED) {
+				Log.d("SaveImage", "Permission not granted by the user");
+				callbackContext.error("Permissions denied");
+				return;
+			}
+		}
+		
+		switch (requestCode) {
+		case WRITE_PERM_REQUEST_CODE:
+			Log.d("SaveImage", "User granted the permission for WRITE_EXTERNAL_STORAGE");
+			performImageSave();
+			break;
+		}
+	}
 }
