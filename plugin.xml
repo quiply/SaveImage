@@ -46,6 +46,17 @@
 
         <header-file src="src/ios/SaveImage.h"/>
         <source-file src="src/ios/SaveImage.m" compiler-flags="-fno-objc-arc"/>
+
+        <preference name="CAMERA_USAGE_DESCRIPTION" default=" " />
+        <config-file target="*-Info.plist" parent="NSCameraUsageDescription">
+            <string>$CAMERA_USAGE_DESCRIPTION</string>
+        </config-file>
+
+        <preference name="PHOTOLIBRARY_USAGE_DESCRIPTION" default=" " />
+        <config-file target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
+            <string>$PHOTOLIBRARY_USAGE_DESCRIPTION</string>
+        </config-file>
+
     </platform>
 
 </plugin>
