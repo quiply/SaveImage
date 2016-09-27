@@ -1,7 +1,7 @@
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-save-image"
-        version="0.2.2">
+        version="0.2.3">
 
     <name>SaveImage</name>
     <description>This plugin allows you to save an image to the iOS Camera roll / Photo Library or Android Gallery.</description>
