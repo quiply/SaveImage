@@ -14,9 +14,6 @@
 
 	    UIImage *image = [UIImage imageWithContentsOfFile:imgAbsolutePath];
 	    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-
-		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:imgAbsolutePath];
-		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 	}];
 }
 
