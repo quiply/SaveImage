@@ -41,7 +41,7 @@ Supported Platforms
 Usage Example
 --------------
 
-Call the `window.cordova.plugins.ImageSaver.saveImageToGallery()` method passing 3 parameters: 1. The native image path for the image to be saved, 2. success callback, 3. error callback
+Call the `window.cordova.plugins.imagesaver.saveImageToGallery()` method passing 3 parameters: 1. The native image path for the image to be saved, 2. success callback, 3. error callback
 
 ### Example
 ```
