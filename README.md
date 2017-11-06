@@ -62,6 +62,43 @@ function onSaveImageError(error) {
 }
 ```
 
+## iOS Quirks
+
+Since iOS 10 it's mandatory to provide an usage description in the `info.plist` if trying to access privacy-sensitive data. When the system prompts the user to allow access, this usage description string will displayed as part of the permission dialog box, but if you didn't provide the usage description, the app will crash before showing the dialog. Also, Apple will reject apps that access private data but don't provide an usage description.
+
+This plugins requires the following usage descriptions:
+
+- `NSCameraUsageDescription` specifies the reason for your app to access the device's camera.
+- `NSPhotoLibraryUsageDescription` specifies the reason for your app to access the user's photo library.
+- `NSPhotoLibraryAddUsageDescription` specifies the reason for your app to get write-only access to the user's photo library
+
+To add these entries into the `info.plist`, you can use the `edit-config` tag in the `config.xml` like this:
+
+```
+<edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+    <string>need camera access to take pictures</string>
+</edit-config>
+```
+
+```
+<edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
+    <string>need to photo library access to get pictures from there</string>
+</edit-config>
+```
+
+```
+<edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+    <string>need location access to find things nearby</string>
+</edit-config>
+```
+
+```
+<edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
+    <string>need to photo library access to save pictures there</string>
+</edit-config>
+```
+
+
 ## License
 
 The MIT License
