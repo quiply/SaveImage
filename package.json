@@ -1,6 +1,6 @@
 {
     "name": "cordova-plugin-save-image",
-    "version": "0.2.6",
+    "version": "0.3.0",
     "cordova": {
         "id": "cordova-plugin-save-image",
         "platforms": [
@@ -24,12 +24,16 @@
         "cordova-ios",
         "cordova-android"
     ],
-    "engines": [
-        {
-            "name": "cordova",
-            "version": ">=3.0.0"
+    "engines": {
+        "cordovaDependencies": {
+            "3.0.0": {
+                "cordova-android": ">=6.3.0"
+            },
+            "4.0.0": {
+                "cordova": ">100"
+            }
         }
-    ],
+    },
     "author": {
         "name": "Quiply Technologies GmbH",
         "email": "hello@quiply.com",
