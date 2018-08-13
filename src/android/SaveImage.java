@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
+import android.util.Base64;
 import android.util.Log;
 
 /**
@@ -77,6 +78,31 @@ public class SaveImage extends CordovaPlugin {
      */
     private void performImageSave() throws JSONException {
         // create file from passed path
+
+        // BoB0: patch per supportare i file base64
+        String ext = "";
+        String dataB64 = "";
+        if (filePath.indexOf("data:image/jpeg;base64,") == 0) {
+            ext = "jpg";
+            dataB64 = filePath.substring("data:image/jpeg;base64,".length());
+        }
+
+        if (!ext.equals("")) {
+            try {
+                byte[] data = Base64.decode(dataB64, Base64.DEFAULT);
+                File outputFile = File.createTempFile("image", ext);
+                FileOutputStream stream = new FileOutputStream(outputFile);
+                stream.write(data);
+                stream.close();
+                filePath = outputFile.getAbsolutePath();
+
+            } catch (Exception e) {
+                callbackContext.error("RuntimeException occurred: " + e.getMessage());
+            }
+
+        }
+
+
         File srcFile = new File(filePath);
 
         // destination gallery folder - external storage
@@ -191,3 +217,4 @@ public class SaveImage extends CordovaPlugin {
 		}
 	}
 }
+
