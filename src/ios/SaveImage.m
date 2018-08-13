@@ -12,9 +12,19 @@
 
         NSLog(@"Image absolute path: %@", imgAbsolutePath);
 
-	    UIImage *image = [UIImage imageWithContentsOfFile:imgAbsolutePath];
+        UIImage *image = nil;
+        if ([imgAbsolutePath hasPrefix:@"data:image/jpeg;base64,"]) {
+            image = [self decodeBase64ToImage: [imgAbsolutePath substringFromIndex:[@"data:image/jpeg;base64," length]]];
+        } else {
+            image = [UIImage imageWithContentsOfFile:imgAbsolutePath];
+        }
 	    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
 	}];
+}
+
+- (UIImage *)decodeBase64ToImage:(NSString *)strEncodeData {
+    NSData *data = [[NSData alloc]initWithBase64EncodedString:strEncodeData options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    return [UIImage imageWithData:data];
 }
 
 - (void)dealloc {
@@ -39,3 +49,4 @@
 }
 
 @end
+

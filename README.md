@@ -1,3 +1,18 @@
+Added support for JPEG Base64 images URIs passed as file name.
+
+Example
+======
+
+
+```
+
+var nativePathToJpegImage = 'data:image/jpeg;base64,<data>'
+
+window.cordova.plugins.imagesaver.saveImageToGallery(nativePathToJpegImage, onSaveImageSuccess, onSaveImageError);
+
+```
+
+
 SaveImage
 ======
 
